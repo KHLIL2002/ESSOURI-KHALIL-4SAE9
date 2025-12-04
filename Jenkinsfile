@@ -8,8 +8,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'khalilessouri/student-management'
-
-       }
+    }
 
     stages {
 
@@ -39,10 +38,11 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t student-management:latest .'
+                sh 'docker build -t ${IMAGE_NAME}:latest .'
             }
         }
-         stage('Push to DockerHub') {
+
+        stage('Push to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh '''
@@ -53,5 +53,29 @@ pipeline {
                }
            }
        }
+
+       stage('Deploy with Docker Compose') {
+            steps {
+                sh '''
+                  # Stop and remove any previous containers
+                  docker-compose down
+
+                  # Build and start the containers
+                  docker-compose up -d --build
+
+                  # Show running containers
+                  docker ps
+               '''
+           }
+       }
+    }
+
+    post {
+        success {
+            echo 'Pipeline SUCCESS ✔'
+        }
+        failure {
+            echo 'Pipeline FAILED ❌'
+        }
     }
 }
