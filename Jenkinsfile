@@ -14,9 +14,10 @@ pipeline {
     stages {
         stage('Clean Workspace') {
             steps {
-                cleanWs()
-            }
-        }
+                deleteDir() // Supprime tout le workspace
+    }
+}
+
 
         stage('Checkout') {
             steps {
