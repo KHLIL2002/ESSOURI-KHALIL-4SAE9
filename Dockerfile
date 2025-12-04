@@ -2,7 +2,6 @@
 FROM eclipse-temurin:17-jdk-alpine
 
 # Install netcat (nc) utility
-RUN apt-get update && apt-get install -y netcat
 # Set the working directory in the container
 WORKDIR /app
 
