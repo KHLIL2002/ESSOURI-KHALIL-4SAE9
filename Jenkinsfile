@@ -12,12 +12,12 @@ pipeline {
     }
 
     stages {
-
         stage('Clean Workspace') {
             steps {
-                deleteDir()
-            }
-        }
+                deleteDir() // Supprime tout le workspace
+    }
+}
+
 
         stage('Checkout') {
             steps {
@@ -27,18 +27,13 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'mvn clean test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
+                sh 'mvn test'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh 'mvn clean package'
             }
         }
 
@@ -62,23 +57,22 @@ pipeline {
                        docker push ${IMAGE_NAME}:latest
                        docker logout
                    '''
-                }
-            }
-        }
+               }
+           }
+       }
 
-        stage('SonarQube Analysis') {
+
+
+       stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh '''
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=student \
-                        -Dsonar.host.url=$SONAR_HOST_URL \
-                        -Dsonar.login=$SONAR_AUTH_TOKEN
-                    '''
+                withSonarQubeEnv('SonarQube') {  // matches SONARQUBE name
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=student -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_AUTH_TOKEN'
                 }
             }
         }
     }
+
+
 
     post {
         success {
