@@ -8,6 +8,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'khalilessouri/student-management'
+        SONARQUBE = 'SonarQube'
     }
 
     stages {
@@ -67,6 +68,14 @@ pipeline {
            }
        }
     }
+
+     stage('SonarQube Analysis') {
+        steps {
+            withSonarQubeEnv('SonarQube') {  // matches SONARQUBE name
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=student-management -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_AUTH_TOKEN'
+                }
+            }
+        }
 
     post {
         success {
