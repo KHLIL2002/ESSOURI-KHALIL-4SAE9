@@ -60,7 +60,7 @@ pipeline {
        stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {  // matches SONARQUBE name
-                    sh 'mvn sonar:sonar -Dsonar.projectKey=student-management -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_AUTH_TOKEN'
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=student -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_AUTH_TOKEN'
                 }
             }
         }
