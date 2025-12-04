@@ -57,8 +57,6 @@ pipeline {
        stage('Deploy with Docker Compose') {
             steps {
                 sh '''
-                  # Stop and remove any previous containers
-                  docker-compose down
 
                   # Build and start the containers
                   docker-compose up -d --build
