@@ -1,5 +1,5 @@
 # Use a base image with JDK 17
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-alpine
 
 # Install netcat (nc) utility
 RUN apt-get update && apt-get install -y netcat
