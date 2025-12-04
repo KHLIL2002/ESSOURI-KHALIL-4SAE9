@@ -6,6 +6,11 @@ pipeline {
         maven 'Maven3'
     }
 
+    environment {
+        IMAGE_NAME = 'KhalilEssouri/student-management'
+
+       }
+
     stages {
 
         stage('Checkout') {
@@ -37,21 +42,16 @@ pipeline {
                 sh 'docker build -t student-management:latest .'
             }
         }
-         stage('Login to DockerHub') {
+         stage('Push to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub',
-                                                usernameVariable: 'DOCKER_USER',
-                                                passwordVariable: 'DOCKER_PASS')]) {
-
-                    sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
-            }
-        }
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh '''
+                       echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                       docker push ${IMAGE_NAME}:latest
+                       docker logout
+                   '''
+               }
+           }
+       }
     }
 }
