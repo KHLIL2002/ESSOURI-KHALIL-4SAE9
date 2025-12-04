@@ -55,18 +55,7 @@ pipeline {
            }
        }
 
-       stage('Deploy with Docker Compose') {
-            steps {
-                sh '''
 
-                  # Build and start the containers
-                  docker-compose up -d --build
-
-                  # Show running containers
-                  docker ps
-               '''
-           }
-       }
 
        stage('SonarQube Analysis') {
             steps {
