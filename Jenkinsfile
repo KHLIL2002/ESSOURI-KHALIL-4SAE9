@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = 'KhalilEssouri/student-management'
+        IMAGE_NAME = 'khalilessouri/student-management'
 
        }
 
