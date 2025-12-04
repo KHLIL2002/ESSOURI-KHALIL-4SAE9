@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        jdk 'Java17'        // Le nom configuré dans Jenkins (à adapter)
-        maven 'Maven3'     // Nom Maven dans Jenkins (à adapter)
+        jdk 'Java17'
+        maven 'Maven3'
     }
 
     stages {
@@ -13,9 +13,15 @@ pipeline {
             }
         }
 
+        stage('Run Tests') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh 'mvn clean package'
             }
         }
 
@@ -23,15 +29,6 @@ pipeline {
             steps {
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Build SUCCESS ✔'
-        }
-        failure {
-            echo 'Build FAILED ❌'
         }
     }
 }
