@@ -8,6 +8,7 @@ import tn.esprit.studentmanagement.repositories.DepartmentRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DepartmentService implements IDepartmentService {
     DepartmentRepository departmentRepository;
 
