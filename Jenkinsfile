@@ -14,9 +14,9 @@ pipeline {
     stages {
         stage('Clean Workspace') {
             steps {
-                deleteDir() // Supprime tout le workspace
-    }
-}
+                deleteDir()
+            }
+        }
 
 
         stage('Checkout') {
@@ -65,7 +65,7 @@ pipeline {
 
        stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {  // matches SONARQUBE name
+                withSonarQubeEnv('SonarQube') {
                     sh 'mvn sonar:sonar -Dsonar.projectKey=student -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_AUTH_TOKEN'
                 }
             }
