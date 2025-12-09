@@ -8,7 +8,6 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'khalilessouri/student-management'
-        SONARQUBE = 'SonarQube'
     }
 
     stages {
