@@ -1,5 +1,6 @@
 package tn.esprit.studentmanagement.services;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.studentmanagement.entities.Department;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class DepartmentService implements IDepartmentService {
     DepartmentRepository departmentRepository;
 
