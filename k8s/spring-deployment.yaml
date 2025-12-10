@@ -19,7 +19,7 @@ spec:
           image: khalilessouri/student-management:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8089
+            - containerPort: 8085
           env:
             # Connect to the Service name defined in mysql-deployment.yaml
             - name: SPRING_DATASOURCE_URL
