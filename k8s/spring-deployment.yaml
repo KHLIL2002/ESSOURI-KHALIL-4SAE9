@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-app
+  namespace: devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-app
+  template:
+    metadata:
+      labels:
+        app: spring-app
+    spec:
+      containers:
+        - name: spring-app
+          # This matches the image name in your Jenkinsfile
+          image: khalilessouri/student-management:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8089
+          env:
+            # Connect to the Service name defined in mysql-deployment.yaml
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://mysql-service:3306/studentdb?createDatabaseIfNotExist=true"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "root"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "rootpassword"
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: "update"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-service
+  namespace: devops
+spec:
+  selector:
+    app: spring-app
+  type: NodePort # Or LoadBalancer if you are on cloud
+  ports:
+    - protocol: TCP
+      port: 8089
+      targetPort: 8089
+      nodePort: 30008 # You can access the app via NodeIP:30008
