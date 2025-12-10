@@ -9,6 +9,8 @@ pipeline {
     environment {
         IMAGE_NAME = 'khalilessouri/student-management'
         SONARQUBE = 'SonarQube'
+        // Define the specific namespace
+        K8S_NAMESPACE = 'devops'
     }
 
     stages {
@@ -17,7 +19,6 @@ pipeline {
                 deleteDir()
             }
         }
-
 
         stage('Checkout') {
             steps {
@@ -68,13 +69,25 @@ pipeline {
                }
            }
        }
+
+       stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    // Apply the Manifests (Using the files you pushed to Git)
+                   // We assume the files are in a folder named 'k8s' in your repo
+                   sh 'kubectl apply -f k8s/mysql-deployment.yaml -n ${K8S_NAMESPACE}'
+                   sh 'kubectl apply -f k8s/spring-deployment.yaml -n ${K8S_NAMESPACE}'
+
+                   // Force a restart of the pod to pick up the new image we just pushed
+                   sh 'kubectl rollout restart deployment/spring-app -n ${K8S_NAMESPACE}'
+               }
+           }
+       }
     }
-
-
 
     post {
         success {
-            echo 'Pipeline SUCCESS ✔'
+            echo 'Pipeline SUCCESS ✔ - Application Deployed to Kubernetes'
         }
         failure {
             echo 'Pipeline FAILED ❌'
