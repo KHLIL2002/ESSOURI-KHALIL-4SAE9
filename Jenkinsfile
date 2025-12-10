@@ -75,8 +75,8 @@ pipeline {
                 script {
                     // Apply the Manifests (Using the files you pushed to Git)
                    // We assume the files are in a folder named 'k8s' in your repo
-                   sh 'kubectl apply -f mysql-deployment.yaml -n ${K8S_NAMESPACE}'
-                   sh 'kubectl apply -f spring-deployment.yaml -n ${K8S_NAMESPACE}'
+                   sh 'kubectl apply -f k8s/mysql-deployment.yaml -n ${K8S_NAMESPACE}'
+                   sh 'kubectl apply -f k8s/spring-deployment.yaml -n ${K8S_NAMESPACE}'
 
                    // Force a restart of the pod to pick up the new image we just pushed
                    sh 'kubectl rollout restart deployment/spring-app -n ${K8S_NAMESPACE}'
