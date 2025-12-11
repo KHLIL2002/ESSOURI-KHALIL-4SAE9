@@ -9,7 +9,6 @@ pipeline {
     environment {
         IMAGE_NAME = 'khalilessouri/student-management'
         SONARQUBE = 'SonarQube'
-        // Define the specific namespace
         K8S_NAMESPACE = 'devops'
     }
 
