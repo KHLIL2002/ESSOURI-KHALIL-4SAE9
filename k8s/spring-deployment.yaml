@@ -43,6 +43,6 @@ spec:
   type: NodePort # Or LoadBalancer if you are on cloud
   ports:
     - protocol: TCP
-      port: 8089
-      targetPort: 8089
+      port: 8091
+      targetPort: 8091
       nodePort: 30008 # You can access the app via NodeIP:30008
