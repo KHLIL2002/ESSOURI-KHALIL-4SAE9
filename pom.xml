@@ -92,6 +92,7 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -126,7 +127,6 @@
                 <version>0.8.11</version>
                 <executions>
                     <execution>
-                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
@@ -140,6 +140,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 
