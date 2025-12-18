@@ -76,14 +76,23 @@ pipeline {
 
        stage('Deploy to Kubernetes') {
             steps {
-                withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]) {
-                    script {
-                        sh "kubectl apply -f k8s/mysql-deployment.yaml -n ${K8S_NAMESPACE}"
-                       sh "kubectl apply -f k8s/spring-deployment.yaml -n ${K8S_NAMESPACE}"
-                       sh "kubectl rollout restart deployment/spring-app -n ${K8S_NAMESPACE}"
-                   }
-                }
+                script {
+
+                    sh 'kubectl apply -f k8s/mysql-deployment.yaml -n ${K8S_NAMESPACE}'
+                   sh 'kubectl apply -f k8s/spring-deployment.yaml -n ${K8S_NAMESPACE}'
+
+                   sh 'kubectl rollout restart deployment/spring-app -n ${K8S_NAMESPACE}'
+               }
            }
        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline SUCCESS ✔ - Application Deployed to Kubernetes'
+        }
+        failure {
+            echo 'Pipeline FAILED ❌'
+        }
     }
 }
