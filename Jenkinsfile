@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        jdk 'jdk17'     // Vérifie que c'est bien le nom dans Jenkins -> Tools
-        maven 'M3'      // Vérifie que c'est bien le nom dans Jenkins -> Tools
+        jdk 'JAVA_HOME'     // Vérifie que c'est bien le nom dans Jenkins -> Tools
+        maven 'M2_HOME'      // Vérifie que c'est bien le nom dans Jenkins -> Tools
     }
 
     environment {
