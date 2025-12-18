@@ -9,7 +9,6 @@ pipeline {
     environment {
         IMAGE_NAME = 'khalilessouri/student-management'
         // Just use the name defined in Jenkins Configuration, no need for variables here usually
-        SONARQUBE_SCANNER_HOME = tool 'SonarQube-Scanner'
         K8S_NAMESPACE = 'devops'
     }
 
