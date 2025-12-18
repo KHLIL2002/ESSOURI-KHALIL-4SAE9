@@ -40,12 +40,13 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('Test, Analyze & Build') {
             steps {
-                // --- CORRECTION 3 : J'ai remis 'SonarQube' (ton ancien nom probable) ---
-                // Si ça plante encore, va voir dans Manage Jenkins -> System -> SonarQube Servers pour le vrai Nom
                 withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar -Dsonar.projectKey=student'
+                    // 'verify' lance les tests et crée le rapport JaCoCo
+                    // 'sonar:sonar' lit le rapport immédiatement
+                    // '-DskipTests' n'est PAS là, car on veut que les tests tournent !
+                    sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=student'
                 }
             }
         }
