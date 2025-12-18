@@ -43,9 +43,9 @@ pipeline {
         stage('Test, Analyze & Build') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    // 'verify' lance les tests et crée le rapport JaCoCo
-                    // 'sonar:sonar' lit le rapport immédiatement
-                    // '-DskipTests' n'est PAS là, car on veut que les tests tournent !
+                    // 'clean verify' : Lance les tests et génère le rapport JaCoCo
+                    // 'sonar:sonar' : Envoie le rapport au serveur
+                    // Pas de -DskipTests ici, sinon 0% de coverage !
                     sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=student'
                 }
             }
