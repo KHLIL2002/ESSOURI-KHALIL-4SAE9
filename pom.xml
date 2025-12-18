@@ -112,28 +112,31 @@
                 </configuration>
             </plugin>
 
-            <!-- Plugin Surefire pour ignorer les tests -->
+            <!-- Plugin Surefire (CORRIGÉ : On active les tests) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <skipTests>false</skipTests> <!-- ICI : mettre false -->
                 </configuration>
             </plugin>
+
+            <!-- Plugin JaCoCo (CORRIGÉ : Phase verify) -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.11</version>
                 <executions>
                     <execution>
+                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
                     <execution>
                         <id>report</id>
-                        <phase>test</phase>
+                        <phase>verify</phase> <!-- ICI : mettre verify -->
                         <goals>
                             <goal>report</goal>
                         </goals>
@@ -143,6 +146,4 @@
 
         </plugins>
     </build>
-
-
 </project>
